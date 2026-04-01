@@ -1,29 +1,26 @@
 name: Docker Image Downloader
 on:
   workflow_dispatch:
-    inputs:
-      tag:
-        description: '版本号 (建议填 latest 或 v2.1.2)'
-        required: true
-        default: 'latest'
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4 # 升级到 v4
       - name: Login to GHCR
-        uses: docker/login-action@v3
+        uses: docker/login-action@v3 # 升级到 v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Pull and Push
         run: |
-          # 1. 直接拉取 GitHub 官方最确定的 v2 节点版本 (v2.2.3)
-          docker pull ghcr.io/lobehub/lobe-chat:v2.2.3
+          # 直接拉取目前 GitHub 上最硬核的 v2 节点，不跟 latest 废话
+          docker pull ghcr.io/lobehub/lobe-chat:v2.1.31
           
-          # 2. 贴上你的 Daniel1107 标签
-          docker tag ghcr.io/lobehub/lobe-chat:v2.2.3 ghcr.io/daniel1107/lobe-chat:latest
+          # 贴上你的 Daniel1107 标签
+          docker tag ghcr.io/lobehub/lobe-chat:v2.1.31 ghcr.io/daniel1107/lobe-chat:latest
           
-          # 3. 推送
+          # 推送
           docker push ghcr.io/daniel1107/lobe-chat:latest
