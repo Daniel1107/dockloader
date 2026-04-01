@@ -19,11 +19,11 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Pull and Push
         run: |
-          # 1. 直接拉取 GitHub 官方托管的最强满血版 (这是作者亲自维护的)
-          docker pull ghcr.io/lobehub/lobe-chat:latest
+          # 1. 直接拉取 GitHub 官方最确定的 v2 节点版本 (v2.2.3)
+          docker pull ghcr.io/lobehub/lobe-chat:v2.2.3
           
-          # 2. 贴上你的 Daniel1107 标签，方便阿里云提货
-          docker tag ghcr.io/lobehub/lobe-chat:latest ghcr.io/daniel1107/lobe-chat:latest
+          # 2. 贴上你的 Daniel1107 标签
+          docker tag ghcr.io/lobehub/lobe-chat:v2.2.3 ghcr.io/daniel1107/lobe-chat:latest
           
           # 3. 推送
           docker push ghcr.io/daniel1107/lobe-chat:latest
