@@ -19,6 +19,11 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Pull and Push
         run: |
-          docker pull lobehub/lobe-chat:${{ github.event.inputs.tag }}
-          docker tag lobehub/lobe-chat:${{ github.event.inputs.tag }} ghcr.io/daniel1107/lobe-chat:${{ github.event.inputs.tag }}
-          docker push ghcr.io/daniel1107/lobe-chat:${{ github.event.inputs.tag }}
+          # 1. 直接拉取 GitHub 官方托管的最强满血版 (这是作者亲自维护的)
+          docker pull ghcr.io/lobehub/lobe-chat:latest
+          
+          # 2. 贴上你的 Daniel1107 标签，方便阿里云提货
+          docker tag ghcr.io/lobehub/lobe-chat:latest ghcr.io/daniel1107/lobe-chat:latest
+          
+          # 3. 推送
+          docker push ghcr.io/daniel1107/lobe-chat:latest
