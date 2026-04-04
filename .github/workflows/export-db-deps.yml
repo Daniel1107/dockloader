@@ -1,4 +1,4 @@
-name: 📦 导出 LobeHub 数据库与存储依赖包
+name: 📦 导出 LobeHub 终极数据库 (ParadeDB)
 
 on:
   workflow_dispatch:
@@ -7,20 +7,17 @@ jobs:
   export:
     runs-on: ubuntu-latest
     steps:
-      - name: 1. 从海外节点拉取数据库和对象存储镜像
+      - name: 1. 拉取 ParadeDB 增强版数据库镜像
         run: |
-          # 修正了 pgvector 的标签，改为官方存在的 pg16
-          docker pull pgvector/pgvector:pg16
-          docker pull minio/minio:latest
+          docker pull paradedb/paradedb:latest
 
-      - name: 2. 将两个镜像合并打包为一个 Tar 文件
+      - name: 2. 打包 Tar 文件
         run: |
-          # 对应的打包命令也同步修正名字
-          docker save -o lobehub_deps.tar pgvector/pgvector:pg16 minio/minio:latest
+          docker save -o paradedb.tar paradedb/paradedb:latest
 
-      - name: 3. 上传为 GitHub Artifact (供下载)
+      - name: 3. 上传为 GitHub Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: lobehub-deps-offline
-          path: lobehub_deps.tar
+          name: paradedb-offline
+          path: paradedb.tar
           retention-days: 1
